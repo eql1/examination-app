@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -24,4 +26,13 @@ public class User {
 
     @Column(nullable = false, updatable = false)
     private String userCode;
+
+    // List of available exam IDs
+    @ManyToMany
+    @JoinTable(
+            name = "user_exam",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "exam_id")
+    )
+    private List<Exam> availableExams;
 }

@@ -1,5 +1,6 @@
 package com.equal.examinationapp.resource;
 
+import com.equal.examinationapp.model.Exam;
 import com.equal.examinationapp.model.User;
 import com.equal.examinationapp.service.UserService;
 import org.springframework.http.HttpStatus;
@@ -30,12 +31,15 @@ public class UserResource {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
+    @GetMapping("/{id}/exam-list")
+    public ResponseEntity<List<Exam>> getAvailableExamsByUserId(@PathVariable("id") Long id) {
+        List<Exam> exams = userService.findAvailableExamsByUserId(id);
+        return new ResponseEntity<>(exams, HttpStatus.OK);
+    }
+
     @PostMapping("/add")
     public ResponseEntity<User> addUser(@RequestBody User user) {
         User newUser = userService.addUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
-
-
-
 }

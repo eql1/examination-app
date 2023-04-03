@@ -1,8 +1,9 @@
 package com.equal.examinationapp.service;
 
 import com.equal.examinationapp.exception.UserNotFoundException;
+import com.equal.examinationapp.model.Exam;
 import com.equal.examinationapp.model.User;
-import com.equal.examinationapp.repo.UserRepo;
+import com.equal.examinationapp.repo.UserRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,23 +11,27 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    private final UserRepo userRepo;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     public List<User> findAllUsers() {
-        return userRepo.findAll();
+        return userRepository.findAll();
     }
 
     public User findUserById(Long id) {
-        return userRepo.findUserById(id).
+        return userRepository.findUserById(id).
                 orElseThrow(() -> new UserNotFoundException("User by id " + id + " not found"));
     }
 
     public User addUser(User user) {
         user.setUserCode(UUID.randomUUID().toString());
-        return userRepo.save(user);
+        return userRepository.save(user);
+    }
+
+    public List<Exam> findAvailableExamsByUserId(Long id) {
+        return userRepository.findAvailableExamsByUserId(id);
     }
 }
