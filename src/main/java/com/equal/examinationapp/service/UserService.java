@@ -34,4 +34,8 @@ public class UserService {
     public List<Exam> findAvailableExamsByUserId(Long id) {
         return userRepository.findAvailableExamsByUserId(id);
     }
+
+    public User updateUser(User user) {
+        return userRepository.save(user);
+    }
 }
