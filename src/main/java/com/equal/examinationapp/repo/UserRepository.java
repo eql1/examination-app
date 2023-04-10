@@ -2,6 +2,7 @@ package com.equal.examinationapp.repo;
 
 import com.equal.examinationapp.model.Exam;
 import com.equal.examinationapp.model.User;
+import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,6 +14,9 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserById(Long id);
+
+    @Transactional
+    void deleteUserById(Long id);
 
     @Query("select u.availableExams from User u WHERE u.id = :userId")
     List<Exam> findAvailableExamsByUserId(@Param("userId") Long userId);

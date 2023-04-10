@@ -26,9 +26,14 @@ public class UserService {
                 orElseThrow(() -> new UserNotFoundException("User by id " + id + " not found"));
     }
 
+
     public User addUser(User user) {
         user.setUserCode(UUID.randomUUID().toString());
         return userRepository.save(user);
+    }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteUserById(id);
     }
 
     public List<Exam> findAvailableExamsByUserId(Long id) {
