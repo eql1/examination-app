@@ -12,5 +12,5 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
     Optional<Exam> findExamById(Long id);
 
     @Transactional
-    void deleteEmployeeById(Long id);
+    void deleteExamById(Long id);
 }

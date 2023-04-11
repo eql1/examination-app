@@ -56,9 +56,6 @@ public class UserController {
     public ResponseEntity<User> addAvailableExamToUser(@PathVariable("userId") Long userId, @PathVariable("examId") Long examId) {
         User user = userService.findUserById(userId);
         Exam exam = examService.findExamById(examId);
-//        if(user.getAvailableExams().contains((exam))) {
-//            return new ResponseEntity<>(user, HttpStatus.ALREADY_REPORTED);
-//        }
         user.getAvailableExams().add(exam);
         exam.getUsersWithAccess().add(user);
         userService.updateUser(user);
@@ -71,7 +68,6 @@ public class UserController {
     public ResponseEntity<?> deleteAvailableExamFromUser(@PathVariable("userId") Long userId, @PathVariable("examId") Long examId) {
         User updatedUser = userService.findUserById(userId);
 
-        // CHange to Set
         List<Exam> availableExams = updatedUser.getAvailableExams();
         for (Exam exam : availableExams) {
             if(exam.getId().equals(examId)) {
